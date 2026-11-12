@@ -1,0 +1,290 @@
+/* ===========================================================
+   Estados do Brasil — o CSS
+
+   O HTML já tem as classes. O guia de estilo está na atividade.
+   =========================================================== */
+*{
+   font-family:Helvetica;
+   box-sizing: border-box;
+}
+
+*:root{
+   --cor-principal: #1d4e89;
+   --cor-norte:#2b8a3e;
+   --cor-nordeste:#e8590c;
+   --cor-centro-oeste:#c2255c;
+   --cor-sudeste:#1971c2;
+   --cor-sul:#6741d9;
+ 
+   --cor-borda:#dce2e8;
+   --cor-fundo:#f3f5f8;
+   --cor-cartao:#ffffff;
+   --cor-texto:#1f2933;
+   --cor-suave:#64707d;
+   --cor-esqueleto:#e2e7ec;
+   --cor-favorito: #e8a200;
+   --cor-erro:#c92a2a; 
+}
+
+    @keyframes piscar{
+  from {opacity:100%
+}to {opacity:50%}
+}
+
+html{
+   padding:0px;
+   margin: 0px;
+   background-color: var(--cor-fundo);
+   color:var(--cor-texto);
+}
+
+header{
+   color: white;
+   margin:0px;
+   background-color:var(--cor-principal);
+   text-align: center;
+   padding: 20px 0px;
+}
+
+body{
+   margin:0;
+}
+
+h1,h2{
+   margin-top:8px;
+   margin-bottom: 12px;
+}
+
+label{
+   font-weight: bold;
+   font-size: 0.90;
+}
+
+button{
+   width: 100%;
+   
+   border-style: none;
+}
+
+button:disabled{
+   opacity: 50%;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--cor-borda);
+    border-radius: 8px;
+    background-color: var(--cor-cartao);
+    color: var(--cor-texto);
+    font-size: 16px;
+}
+
+label{
+    display: block;
+    margin-bottom: 4px;
+    font-weight: bold;
+}
+
+.conteudo{
+   padding-left:40px;
+   padding-right:40px;
+}
+.barra{
+    display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  
+}
+.filtros{
+    display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
+  gap:16px;
+}
+.regioes{
+   display: flex;
+   flex-direction: row;
+   width:auto;
+   gap:16px
+}
+
+.erro{
+   font-weight: bold;
+   color:rgb(255, 0, 0)
+}
+.lista-de-estados{
+   display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  gap: 16px;
+  list-style: none;
+  padding:0
+  
+}
+button.botao-regiao,button.botao-favoritos{
+   display: flex;
+   flex-direction: row;
+   gap:4px;
+  text-wrap: nowrap;
+    width:max-content;
+    background-color: white;
+   padding:8px 16px ;
+   border:1px solid lightgray;
+   border-radius: 16px;
+}
+
+.botao-favoritos{
+   width: fit-content;
+   height: fit-content;
+   justify-self:right;
+}
+
+
+.botao-favoritos.ativo{
+   background-color:var(--cor-principal);
+}
+.estado-acoes{
+   justify-content: space-between;
+   display:flex;
+   flex-direction: row;
+}
+
+.botao-favorito{
+  align-self:flex-end;
+   font-size: 25px;
+width: fit-content;
+ border: 1px black solid;
+ border-style: none;
+ background-color: transparent;
+}
+
+button.botao-regiao.ativo{
+   background-color:var(--cor-principal);
+}
+.botao-favorito.favorito{
+   color:gold;
+}
+
+.estado-municipios{
+   margin-top: 0px;
+}
+
+.botao-municipios{
+   background-color: transparent;
+   width:fit-content;
+   padding: 8px;
+   border-radius:6px;
+}
+
+.estado-regiao{
+   font-weight: bold;
+   margin-top: 0px;
+}
+
+.estado-esqueleto{
+   min-height: 200px;
+   border:6px solid var(--cor-esqueleto);
+    border-right:1px solid var(--cor-borda);
+   border-bottom:1px solid var(--cor-borda);
+   border-left:1px solid var(--cor-borda);
+    border-radius: 8px;
+   animation-name: piscar; 
+   animation-duration: 2s;
+   animation-iteration-count: infinite;
+}
+
+.estado{
+   display: flex;
+   flex-direction: column;
+   background-color: var(--cor-cartao);
+   border-radius: 8px;
+   min-height: 200px;
+   padding:25px 20px;
+   border-right:1px solid var(--cor-borda);
+   border-bottom:1px solid var(--cor-borda);
+   border-left:1px solid var(--cor-borda);
+   justify-content: flex-start;
+}
+
+.estado-sigla{
+font-size:40px;
+font-weight: bolder;
+margin-bottom: 0px;
+margin-top:0px;
+}
+
+
+
+.estado[data-regiao='Sul']{
+   
+   border-top:6px solid var(--cor-sul);
+
+   .botao-municipios{
+      color: var(--cor-sul);
+      border: 1px solid var(--cor-sul);
+   }
+   .estado-sigla,
+   .estado-regiao{
+    color: var(--cor-sul);
+  }
+
+}
+
+.estado[data-regiao='Sudeste']{
+   
+   border-top:6px solid var(--cor-sudeste);
+
+   .botao-municipios{
+      color: var(--cor-sudeste);
+      border: 1px solid var(--cor-sudeste);
+   }
+   .estado-sigla,
+   .estado-regiao{
+    color: var(--cor-sudeste);
+  }
+
+}
+.estado[data-regiao='Centro-Oeste']{
+   
+   border-top:6px solid var(--cor-centro-oeste);
+
+   .botao-municipios{
+      color: var(--cor-centro-oeste);
+      border: 1px solid var(--cor-centro-oeste);
+   }
+   .estado-sigla,
+   .estado-regiao{
+    color: var(--cor-centro-oeste);
+  }
+
+}
+.estado[data-regiao='Nordeste']{
+   
+   border-top:6px solid var(--cor-nordeste);
+
+   .botao-municipios{
+      color: var(--cor-nordeste);
+      border: 1px solid var(--cor-nordeste);
+   }
+   .estado-sigla,
+   .estado-regiao{
+    color: var(--cor-nordeste);
+  }
+
+}
+.estado[data-regiao='Norte']{
+   
+   border-top:6px solid var(--cor-norte);
+
+   .botao-municipios{
+      color: var(--cor-norte);
+      border: 1px solid var(--cor-norte);
+   }
+   .estado-sigla,
+   .estado-regiao{
+    color: var(--cor-norte);
+  }
+
+}
+
+
+
