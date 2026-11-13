@@ -3,6 +3,31 @@
 
    O HTML já tem as classes. O guia de estilo está na atividade.
    =========================================================== */
+@keyframes surgir{
+  from{opacity:0;
+    transform:  (-8px);
+
+   box-shadow: var(--cor-suave )  0px 12px 24px;
+}to{ 
+   transform:  translateY(8px);
+      opacity: 100%;
+   box-shadow:none;} 
+}
+
+@keyframes respostaSurgir{
+   from{ 
+      opacity: 0;
+      transform:  translateY(-8px);
+     
+}to{ 
+   opacity:1;
+    transform:  translateY(0);
+    
+}
+
+}
+
+
 *{
    font-family:Helvetica;
    box-sizing: border-box;
@@ -44,6 +69,7 @@ header{
    background-color:var(--cor-principal);
    text-align: center;
    padding: 20px 0px;
+   padding-bottom: 30px;
 }
 
 body{
@@ -58,6 +84,10 @@ h1,h2{
 label{
    font-weight: bold;
    font-size: 0.90;
+}
+
+ul,ol{
+   list-style: none;
 }
 
 button{
@@ -86,16 +116,40 @@ label{
     margin-bottom: 4px;
     font-weight: bold;
 }
+summary{
+   place-self: center;
+   padding: 10px 25px;
+   font-size: 15px;
+   color:var(--cor-texto);
+   background-color:white ;
+   border: solid 1px var(--cor-borda);
+   width: fit-content;
+   border-radius:  25px;
+   margin:8px
 
+}
+  
+
+ details[open] p.duvida-resposta{
+   animation-name: respostaSurgir;
+   animation-duration: 0.3s;
+   animation-timing-function: ease;
+   
+   
+ }
+
+.duvida{
+   place-self: center ;
+}
+.subtitulo{
+   margin-top:0px;
+   font-size: 20px;
+}
 .conteudo{
    padding-left:40px;
    padding-right:40px;
 }
-.barra{
-    display:grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
-  
-}
+
 .filtros{
     display:grid;
   grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
@@ -103,6 +157,7 @@ label{
 }
 .regioes{
    display: flex;
+   flex-wrap: wrap;
    flex-direction: row;
    width:auto;
    gap:16px
@@ -116,9 +171,16 @@ label{
    display:grid;
   grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
   gap: 16px;
-  list-style: none;
+  
   padding:0
   
+}
+.barra{
+   display: flex;
+   flex-wrap: wrap;
+   justify-content: space-between;
+   align-items: flex-start;
+   gap: 16px;
 }
 button.botao-regiao,button.botao-favoritos{
    display: flex;
@@ -143,7 +205,9 @@ button.botao-regiao,button.botao-favoritos{
    background-color:var(--cor-principal);
 }
 .estado-acoes{
+   
    justify-content: space-between;
+   justify-self: bottom;
    display:flex;
    flex-direction: row;
 }
@@ -157,6 +221,11 @@ width: fit-content;
  background-color: transparent;
 }
 
+.botao-favorito:hover{
+   font-size: 175%;
+   transition: 0.3s;
+}
+
 button.botao-regiao.ativo{
    background-color:var(--cor-principal);
 }
@@ -164,9 +233,44 @@ button.botao-regiao.ativo{
    color:gold;
 }
 
+.estado{
+   display: flex;
+   flex-direction: column;
+   background-color: var(--cor-cartao);
+   border-radius: 8px;
+   min-height: 200px;
+   padding:25px 20px;
+   border-right:1px solid var(--cor-borda);
+   border-bottom:1px solid var(--cor-borda);
+   border-left:1px solid var(--cor-borda);
+   justify-content: flex-start;
+   transform: translateY(8px);
+   transition: 0.3s;
+   animation-name: surgir;
+   animation-duration: 0.3s;
+    animation-fill-mode: backwards;
+}
+
+.estado:hover{
+   transform: translateY(-8px);
+   
+  box-shadow: var(--cor-suave )  0px 12px 24px;
+  transition: 0.3s;
+}
+
+
+
+
 .estado-municipios{
+   color:var(--cor-suave);
    margin-top: 0px;
 }
+.estado-municipios.buscando{
+    animation-name: piscar; 
+   animation-duration: 2s;
+   animation-iteration-count: infinite;
+}
+
 
 .botao-municipios{
    background-color: transparent;
@@ -174,6 +278,7 @@ button.botao-regiao.ativo{
    padding: 8px;
    border-radius:6px;
 }
+
 
 .estado-regiao{
    font-weight: bold;
@@ -192,18 +297,7 @@ button.botao-regiao.ativo{
    animation-iteration-count: infinite;
 }
 
-.estado{
-   display: flex;
-   flex-direction: column;
-   background-color: var(--cor-cartao);
-   border-radius: 8px;
-   min-height: 200px;
-   padding:25px 20px;
-   border-right:1px solid var(--cor-borda);
-   border-bottom:1px solid var(--cor-borda);
-   border-left:1px solid var(--cor-borda);
-   justify-content: flex-start;
-}
+
 
 .estado-sigla{
 font-size:40px;
@@ -222,6 +316,11 @@ margin-top:0px;
       color: var(--cor-sul);
       border: 1px solid var(--cor-sul);
    }
+   .botao-municipios:hover{
+    background-color:var(--cor-sul) ;
+    color:white;
+    transition: 0.3s;
+    }
    .estado-sigla,
    .estado-regiao{
     color: var(--cor-sul);
@@ -237,6 +336,11 @@ margin-top:0px;
       color: var(--cor-sudeste);
       border: 1px solid var(--cor-sudeste);
    }
+   .botao-municipios:hover{
+    background-color:var(--cor-sudeste);
+    color:white;
+    transition: 0.3s;
+    }
    .estado-sigla,
    .estado-regiao{
     color: var(--cor-sudeste);
@@ -251,6 +355,11 @@ margin-top:0px;
       color: var(--cor-centro-oeste);
       border: 1px solid var(--cor-centro-oeste);
    }
+   .botao-municipios:hover{
+    background-color:var(--cor-centro-oeste);
+    color:white;
+    transition: 0.3s;
+    }
    .estado-sigla,
    .estado-regiao{
     color: var(--cor-centro-oeste);
@@ -265,6 +374,11 @@ margin-top:0px;
       color: var(--cor-nordeste);
       border: 1px solid var(--cor-nordeste);
    }
+   .botao-municipios:hover{
+    background-color:var(--cor-nordeste) ;
+    color:white;
+    transition: 0.3s;
+    }
    .estado-sigla,
    .estado-regiao{
     color: var(--cor-nordeste);
@@ -279,12 +393,103 @@ margin-top:0px;
       color: var(--cor-norte);
       border: 1px solid var(--cor-norte);
    }
+   .botao-municipios:hover{
+    background-color:var(--cor-norte) ;
+    color:white;
+    transition: 0.3s;
+    }
    .estado-sigla,
    .estado-regiao{
     color: var(--cor-norte);
   }
 
 }
+
+.opcao-regiao{
+   margin:8px;
+   display: flex;
+   background-color: transparent;
+   justify-items: left;
+   color:var(--cor-suave);
+   font-size: 15px;
+}
+
+.menu-regioes{
+   display: flex;
+   flex-direction: row;
+   justify-content: center;
+}
+.menu-lista {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    
+}
+
+.menu-botao{
+   display:inline-flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: space-between;
+   place-self: center ;
+   padding: 10px 25px;
+   font-size: 15px;
+   color:white;
+   background-color: transparent;
+   border: solid 1px var(--cor-fundo);
+   width: fit-content;
+   border-radius:  25px;
+}
+
+.tem-submenu {
+   position: relative;
+}
+.submenu {
+   position: absolute;
+   top: 100%;
+   left: 0;
+   z-index: 10;
+   min-width: 220px;
+   margin: 0;
+    padding: 8px;
+    border-radius: 10px;
+    background-color: var(--cor-cartao);
+     color: var(--cor-texto);
+    box-shadow: var(--cor-suave)  0px 2px 16px;
+    opacity: 0;
+     visibility: hidden;
+     transform: scaleY(0);
+     transform-origin: top;
+     transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+}
+
+.tem-submenu:hover .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: scaleY(1);
+}
+
+.flecha{
+   display: flex;
+   align-items: center;
+   font-size: 25px;
+   height: fit-content;
+   margin-top: 3px;
+   transition: 0.3s;
+}
+
+.tem-submenu:hover span.flecha{
+   
+   transform: rotate(180deg);
+   transition: 0.3s;
+
+}
+.submenu a:hover {
+    background-color: var(--cor-fundo);
+}
+  
 
 
 

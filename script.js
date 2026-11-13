@@ -49,7 +49,9 @@ async function buscarCidades(sigla){
    const botoesConteiner=document.querySelector('.regioes')
    const botaoRegiao= document.querySelectorAll('.botao-regiao');
    const botaoFavoritos=document.querySelector('.botao-favoritos');
-  
+  const botoesLista= document.querySelectorAll('.opcao-regiao')
+ const conteinerOpcoes= document.querySelector('.tem-submenu')
+
    async function inicializarLista(){
    resetarTextoStatus();
    Status.textContent='Carregando os estados...'
@@ -98,7 +100,16 @@ function carregarFavoritos(){
    })
 
    }
+
+    function mostrarMunicipios(elemento){
+      elemento.textContent='Buscando...'
+      
+   };
+
+
    
+
+
 function criarCard(estados){
    const card= document.createElement('li');
    const sigla= document.createElement('p');
@@ -114,7 +125,7 @@ function criarCard(estados){
    sigla.classList.add('estado-sigla');
    nome.classList.add('estado-nome');
    regiao.classList.add('estado-regiao');
-   municipio.classList.add('estado-municipios');
+   municipio.classList.add('estado-municipios','buscando');
    acoes.classList.add('estado-acoes');
    botaoMunicipio.classList.add('botao-municipios');
    botaoFavorito.classList.add('botao-favorito');
@@ -126,9 +137,9 @@ function criarCard(estados){
    botaoFavorito.textContent='☆'; 
 
    botaoMunicipio.addEventListener('click',async function(){
-       municipio.textContent='Buscando...'
+        mostrarMunicipios(municipio);
        botaoMunicipio.disabled=true; 
-      try{
+      try{ 
       const municipios= await buscarCidades(estados.sigla);
       console.log(municipios)
       botaoMunicipio.disabled=false; 
@@ -137,6 +148,8 @@ function criarCard(estados){
    }catch(erro){
       municipio.classList.add('erro')
       municipio.textContent= erro.message;
+   }finally{
+       municipio.classList.remove('buscando')
    }
 })
     
@@ -168,6 +181,8 @@ function criarCard(estados){
    return card;
    }
    
+
+
    function resetarTextoStatus(){
       Status.textContent='';
       Status.classList.remove('erro');
@@ -229,6 +244,7 @@ const filtrados= ordenarEstados(filtrarEstados(estados));
 
 for( let i=0; i< filtrados.length;i++){   
    const card=criarCard(filtrados[i]);
+   card.style.animationDelay= i * 0.1+'s' ;
    listaEstados.appendChild(card);
     }
     atualizarContagens();
@@ -249,25 +265,26 @@ campoOrdem.addEventListener('change',function(){
    renderizarLista(estados);
 })
 
+
+
+
+
+
 botaoRegiao.forEach(function (botao) {
-   const quantidade=botao.querySelector('.quantidade');
-  
   botao.addEventListener('click', function () {
-    // 3. tira o "ativo" de todos
-    botaoRegiao.forEach(function (outro) {
-      outro.classList.remove('ativo');
-    });
-    
-    // 4. coloca só no que foi clicado
-    botao.classList.add('ativo');
-    const botaoAtivo=botoesConteiner.querySelector('.ativo')
-    botoesConteiner.setAttribute('data-regiao', botaoAtivo.dataset.regiao)
-    
-    renderizarLista(estados)
+    selecionarRegiao(botao.dataset.regiao);
   });
 });
+ 
 
+function selecionarRegiao(regiao) {
+  botaoRegiao.forEach(function (botao) {
+    botao.classList.toggle('ativo', botao.dataset.regiao === regiao);
+  });
 
+  botoesConteiner.dataset.regiao = regiao;
+  renderizarLista(estados);
+}
 
 campoBusca.addEventListener('input',function(){
    
@@ -278,4 +295,12 @@ botaoFavoritos.addEventListener('click',function(){
    botaoFavoritos.classList.toggle('ativo')
    renderizarLista(estados);
 })
+
+
+botoesLista.forEach(function (opcao) {
+  opcao.addEventListener('click', function (evento) {
+    evento.preventDefault();   // só necessário se a opção for um <a href>
+    selecionarRegiao(opcao.dataset.regiao);
+  });
+});
 
